@@ -1,16 +1,19 @@
 import { observer } from "mobx-react-lite";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Form, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import LoadingComponent from "../../../layout/LoadingComponent";
 import { Activity } from "../../../models/activity";
-
+import { v4 as uuid} from 'uuid';
 
 export default observer (function ActivityForm(){
     const {activityStore} = useStore();
     const {selectedActivity, createActivity, updateActivity, loading, loadActivity, loadingInitial} = activityStore;
     const {id} = useParams<{id: string}>();
+
+    //we are using 'navigate' to route user to list after submitting form.
+    const navigate = useNavigate();
 
     const [activity, setActivity] = useState<Activity>({
         id: '',
@@ -45,10 +48,15 @@ export default observer (function ActivityForm(){
     function handleSubmit(){
 
         //if activity.id is not null then update activity else create a new activity
-        activity.id ? updateActivity(activity) : createActivity(activity);
+        if(!activity.id){
+            activity.id = uuid();
 
-        //createOrEdit(activity);
-        console.log(activity);
+            //create the activity and then navigate to activity details view
+            createActivity(activity).then(()=> navigate(`/activities/${activity.id}`));
+        }else {
+            //update the activity and then navigate to activity details view
+            updateActivity(activity).then(()=> navigate(`/activities/${activity.id}`));
+        }
     }
 
     //here we are receiving input changes on any Html Input Elements or Html Text Area Element
