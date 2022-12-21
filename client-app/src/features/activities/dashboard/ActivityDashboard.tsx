@@ -7,14 +7,18 @@ import ActivityList from "./ActivityList";
 
 export default observer(function ActivityDashboard() {
     const { activityStore } = useStore();
-
-    //extracting two properties from activityStore obj just like we create reference variables
-    const { selectedActivity, editMode } = activityStore;
-
+    const {loadActivitites, activityRegistry} = activityStore;
+ 
     //making get request
     useEffect(() => {
-        activityStore.loadActivitites();
-    }, [activityStore]); //here we are passing activityStore as depedency
+        //checking if we do have activities only then we will load activities 
+        //Here we have to check 'activityRegistry.size <= 1' because if user directly opens an activity from browser
+        //then we only have 
+        if(activityRegistry.size <= 1 ){
+            activityStore.loadActivitites();
+        }
+        
+    }, [loadActivitites, activityRegistry.size, activityStore]); //here we are passing activityStore as depedency
 
     if (activityStore.loadingInitial) return <LoadingComponent content='Loading app' />
 
