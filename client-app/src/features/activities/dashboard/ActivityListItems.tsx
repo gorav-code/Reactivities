@@ -21,30 +21,7 @@ export default function ActivityListItem({ activity }: Props) {
         deleteActivity(id);
     }
 
-    return (
-        // <Item key={activity.id}>
-        //     <Item.Content>
-        //         <Item.Header as='a'>{activity.title}</Item.Header>
-        //         <Item.Meta>{activity.date}</Item.Meta>
-        //         <Item.Description>
-        //             <div>{activity.description}</div>
-        //             <div>{activity.city}, {activity.description}</div>
-        //         </Item.Description>
-        //         <Item.Extra>
-        //             <Button as={Link} to={`/activities/${activity.id}`} floated='right' content='View' color='blue' />
-        //             <Button
-        //                 name={activity.id}
-        //                 loading={loading && target === activity.id} //here we are setting target id so that only that individual button show progress circle 
-        //                 onClick={(e) => handleActivityDelete(e, activity.id)}
-        //                 floated='right'
-        //                 content='Delete'
-        //                 color='red' />
-
-        //             <Label basic content={activity.category} />
-        //         </Item.Extra>
-        //     </Item.Content>
-        // </Item>
-
+    return ( 
         <Segment.Group>
             <Segment>
                 <Item.Group>
@@ -63,16 +40,19 @@ export default function ActivityListItem({ activity }: Props) {
             </Segment>
             <Segment>
                 <span>
-                    <Icon name='clock'/>
-                    <Icon name='marker'/>
+                    <Icon name='clock' /> {activity.date}
+                    <Icon name='marker' /> {activity.venue}
                 </span>
             </Segment>
             <Segment secondary>
                 Attendees go here
             </Segment>
-            <Segment secondary>
+
+            {/* here we are using clearing flag because this entire segment will be repeated in list so we need to clear previous item floating content  */}
+            <Segment clearing>
                 <span>{activity.description}</span>
-                <Button as={Link} to={`/activities/${activity.id}`} floated='right' content='View' color='teal' />            </Segment>
+                <Button as={Link} to={`/activities/${activity.id}`} floated='right' content='View' color='teal'/>
+            </Segment>
         </Segment.Group>
     )
 }
