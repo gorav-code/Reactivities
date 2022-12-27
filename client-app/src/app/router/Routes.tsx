@@ -2,6 +2,7 @@ import {createBrowserRouter, RouteObject} from 'react-router-dom';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 import ActivityDetails from '../../features/activities/details/ActivityDetails';
 import ActivityForm from '../../features/activities/form/ActivityForm';
+import TestErrors from '../../features/errors/TestError';
 
 import App from '../../layout/App';
 export const routes: RouteObject[] = [
@@ -22,6 +23,8 @@ export const routes: RouteObject[] = [
             //edit/update existing activity
             //Here we must specify 'key' because we are using same 'ActivityForm' element for both Create and Edit/Update/Manage
             {path: 'manage/:id', element:<ActivityForm key='manage'/>},
+
+            {path: 'errors', element:<TestErrors/>},
         ]
     }
 ]

@@ -19,6 +19,7 @@ using Application.Activities;
 using Application.Core;
 using AutoMapper;
 using API.Extensions;
+using API.Middleware;
 
 namespace API
 {
@@ -42,6 +43,10 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //need to uncomment it and check why this exception handling middle ware is not working
+            //take reference from chapter from course
+            //app.UseMiddleware<ExceptionMiddleware>();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

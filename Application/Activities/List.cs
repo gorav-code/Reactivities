@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +14,12 @@ namespace Application.Activities
 {
     public class List
     {
-        public class Query: IRequest<List<Activity>>
+        public class Query: IRequest<Result<List<Activity>>>
         {
 
         }
 
-        public class Handler : IRequestHandler<Query, List<Activity>>
+        public class Handler : IRequestHandler<Query, Result<List<Activity>>>
         {
             public readonly DataContext _context;
             public ILogger<List> _logger { get; }
@@ -28,22 +29,10 @@ namespace Application.Activities
                 _logger = logger;
                 _context = context; 
             }
-            public async Task<List<Activity>> Handle(Query request, CancellationToken cancellationToken)
+
+            public async Task<Result<List<Activity>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                // try
-                // {
-                //     for(var i = 0; i< 10; i++)
-                //     {
-                //         cancellationToken.ThrowIfCancellationRequested();
-                //         await Task.Delay(1000, cancellationToken);
-                //         _logger.LogInformation($"Task {i} has completed");
-                //     }
-                // }//using 'when' we are checking exception is type of TaskCanceledException
-                // catch (System.Exception ex) when (ex is TaskCanceledException)
-                // {
-                //     _logger.LogInformation("Task is cancelled");
-                // }
-                return await _context.Activities.ToListAsync();
+                return Result<List<Activity>>.Success(await _context.Activities.ToListAsync());
             }
         }
 
