@@ -20,7 +20,7 @@ export const routes: RouteObject[] = [
             //Here we must specify 'key' because we are using same 'ActivityForm' element for both Create and Edit/Update/Manage
             {path: 'createactivity', element:<ActivityForm key='create'/>},  
             
-            //edit/update existing activity
+            //edit/update existing actvity
             //Here we must specify 'key' because we are using same 'ActivityForm' element for both Create and Edit/Update/Manage
             {path: 'manage/:id', element:<ActivityForm key='manage'/>},
 

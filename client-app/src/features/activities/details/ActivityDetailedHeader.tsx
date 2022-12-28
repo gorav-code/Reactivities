@@ -54,4 +54,4 @@ export default observer (function ActivityDetailedHeader({activity}: Props) {
         </Segment.Group>
     )
 })
- 
+        
