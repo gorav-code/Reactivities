@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './layout/styles.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-datepicker/dist/react-datepicker.css';
-import App from './layout/App';
 import reportWebVitals from './reportWebVitals';
 import { store, StoreContext } from './app/stores/store';
 import { RouterProvider } from 'react-router-dom';

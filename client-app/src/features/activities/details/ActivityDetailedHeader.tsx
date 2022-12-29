@@ -3,7 +3,8 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import {Button, Header, Item, Segment, Image} from 'semantic-ui-react'
 import { Activity } from '../../../models/activity';
- 
+import { convertDateToOnlyDateString } from '../../../app/common/form/options/utility';
+
 const activityImageStyle = {
     filter: 'brightness(30%)'
 };
@@ -35,7 +36,7 @@ export default observer (function ActivityDetailedHeader({activity}: Props) {
                                     content={activity.title}
                                     style={{color: 'white'}}
                                 />
-                                <p>{activity.date}</p>
+                                <p>{convertDateToOnlyDateString(activity.date)}</p>
                                 <p>
                                     Hosted by <strong>Bob</strong>
                                 </p>

@@ -21,8 +21,7 @@ export default function MySelectList(props: Props){
                 onChange={(e, d) => helpers.setValue(d.value)}
                 onBlur={()=>helpers.setTouched(true)}
                 placeholder={props.placeholder}>
-            </Select>
-            <input {...field}{...props} />
+            </Select> 
             {meta.touched && meta.error? (
                 <Label basic color='red'>{meta.error}</Label>
             ): null}

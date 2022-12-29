@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { Activity } from "../../models/activity";
 import agent from "../api/agent";
 import { v4 as uuid } from "uuid";
+import { convertDateToOnlyDateString } from '../common/form/options/utility';
 
 export default class ActivityStore {
     //activity array now we are replacing it with Map because Map is more optimized and faster
@@ -22,7 +23,7 @@ export default class ActivityStore {
         //here we are sorting activities by date
         var sortedActivititesByDate = Array.from(
             this.activityRegistry.values()
-        ).sort((a, b) => a.date.getTime() - b.date.getTime());
+        ).sort((a, b) => a.date!.getTime() - b.date!.getTime());
         return sortedActivititesByDate;
     }
 
@@ -32,7 +33,7 @@ export default class ActivityStore {
     get groupActivities(){
         return Object.entries(
             this.activitiesByDate.reduce((activities, activity) => {
-                const date = activity.date.toISOString().split('T')[0];
+                const date = convertDateToOnlyDateString(activity.date).toString();
                 activities[date] = activities[date] ? [...activities[date], activity] : [activity];
                 return activities;
             }, {} as {[key: string]: Activity[]})
@@ -90,7 +91,7 @@ export default class ActivityStore {
 
     private setActivity = (activity: Activity) => {
         //activity.date = activity.date.split("T")[0];
-        activity.date = new Date(activity.date);
+        activity.date = new Date(activity.date!);
 
         //using array
         //this.activities.push(activity);

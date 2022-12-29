@@ -1,6 +1,5 @@
-import React, { Fragment, SyntheticEvent, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Header, Item, Label, Segment } from "semantic-ui-react";
+import React, { Fragment} from "react";
+import { Header} from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import ActivityListItem from "./ActivityListItems";
 
@@ -8,10 +7,8 @@ import ActivityListItem from "./ActivityListItems";
 export default function ActivityList() {
 
     const { activityStore } = useStore();
-    const { deleteActivity, activitiesByDate, loading, groupActivities } = activityStore;
-
-    const [target, setTarget] = useState('');
-
+    const {groupActivities } = activityStore;
+ 
     return (
         <>
             {groupActivities.map(([group, activities]) => (
