@@ -22,7 +22,7 @@ export default class ActivityStore {
         //here we are sorting activities by date
         var sortedActivititesByDate = Array.from(
             this.activityRegistry.values()
-        ).sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+        ).sort((a, b) => a.date.getTime() - b.date.getTime());
         return sortedActivititesByDate;
     }
 
@@ -32,7 +32,7 @@ export default class ActivityStore {
     get groupActivities(){
         return Object.entries(
             this.activitiesByDate.reduce((activities, activity) => {
-                const date = activity.date;
+                const date = activity.date.toISOString().split('T')[0];
                 activities[date] = activities[date] ? [...activities[date], activity] : [activity];
                 return activities;
             }, {} as {[key: string]: Activity[]})
@@ -89,7 +89,8 @@ export default class ActivityStore {
     };
 
     private setActivity = (activity: Activity) => {
-        activity.date = activity.date.split("T")[0];
+        //activity.date = activity.date.split("T")[0];
+        activity.date = new Date(activity.date);
 
         //using array
         //this.activities.push(activity);
