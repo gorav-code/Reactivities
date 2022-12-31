@@ -38,6 +38,9 @@ namespace API
 
             //we have moved all services to 'ApplicationServiceExtensions' class' just to cleanup this method here and it look more cleaner
             services.AddApplicationServices(Config);
+            
+            //adding identity framework using 'IdentityServiceExtensions' class
+            services.AddIdentityService(Config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
