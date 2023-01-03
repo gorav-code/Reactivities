@@ -20,6 +20,8 @@ using Application.Core;
 using AutoMapper;
 using API.Extensions;
 using API.Middleware;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace API
 {
@@ -34,7 +36,11 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(); 
+            //services.AddControllers(); 
+            services.AddControllers(opt => {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                opt.Filters.Add(new AuthorizeFilter(policy));
+            });
 
             //we have moved all services to 'ApplicationServiceExtensions' class' just to cleanup this method here and it look more cleaner
             services.AddApplicationServices(Config);
@@ -63,6 +69,8 @@ namespace API
 
             app.UseCors("CorsPolicy");
 
+            //Authentication will come first before Authorization as written below
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -4,33 +4,27 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using API.DTO;
+using API.Services;
 using Domain;
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Persistence;
+using Microsoft.AspNetCore.Mvc; 
 
 namespace API.Controllers
 {
+    [AllowAnonymous]//we are allowing Account controller anonymous so that user can do login and signup
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly DataContext _dataContext;
-        public AccountController(UserManager<AppUser> userManager, DataContext dataContext)
+        private readonly TokenService _tokenService;
+        public AccountController(UserManager<AppUser> userManager, TokenService tokenService)
         {
-            _dataContext = dataContext;
             _userManager = userManager;
+            _tokenService = tokenService;
         }
-
-        [HttpGet("test")]
-        public IActionResult GetTest()
-        {
-            return Ok("All good");
-        }
+ 
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
@@ -46,7 +40,7 @@ namespace API.Controllers
                 {
                     DisplayName = user.DisplayName,
                     Image = null,
-                    Token = "this will be a token", //add a token here for api,
+                    Token = _tokenService.CreateToken(user),
                     UserName = user.UserName
                 };
             }
