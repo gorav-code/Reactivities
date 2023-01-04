@@ -18,8 +18,11 @@ namespace API.Extensions
         public static IServiceCollection AddIdentityService(this IServiceCollection services,
         IConfiguration config)
         {
+            
             services.AddIdentityCore<AppUser>(opt => {
+                //we can customize this by setting true/false 
                 opt.Password.RequireNonAlphanumeric = false;
+                opt.User.RequireUniqueEmail = true;
             })
             .AddEntityFrameworkStores<DataContext>();
             
