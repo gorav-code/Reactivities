@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { Activity } from "../../models/activity";
+import { User, UserFormValues } from "../../models/user";
 
 
 const sleep = (delay: number) => {
@@ -42,9 +43,15 @@ const Activities = {
     delete: (id: String)=>axios.delete(`/activities/${id}`)
 }
 
-const agent = {
-    Activities
+const Account = {
+    current: () => requests.get<User>('/account'),
+    login: (user: UserFormValues) => requests.post<User>('/account/login', user),
+    register: (user: UserFormValues) => requests.post<User>('/account/register', user),
 }
 
+const agent = {
+    Activities,
+    Account
+}
 
 export default agent;
